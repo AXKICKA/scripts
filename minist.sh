@@ -1,14 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
 # Author: Akil Johnson Sept 17, 2022
-
-echo "\033[1;34mStarting docker (via colima) and minikube\033[0m"
-
+tput setaf 2
+echo "Starting docker (via colima) and minikube"
+# tput srg0
 # Start colima to enable kubernetes add --kubernetes
 colima start
 
+tput setaf 2
+echo "Listing docker images on local host"
+# tput srg0
 
-echo "\033[1;34mListing available profiles\033[0m"
 # Shows a list of Docker images available with a go template
 docker image ls --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}\t{{.Size}}"
 
@@ -30,7 +32,10 @@ docker image ls --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}\t{{.Size}}"
 docker ps -a --format 'table {{.ID}}\t{{.Image}}\t{{.Names }}\t{{.Status}}'
 
 # List the available local docker profiles. Each profile may run a different version kubernetes for instance
-echo "\033[1;34mListing available profiles\033[0m"
+tput setaf 2
+echo "Listing available minikube profiles"
+# tput srg0
+
 minikube profile list
 
 # Prompt the user to select a profile or press ENTER for the default profile
