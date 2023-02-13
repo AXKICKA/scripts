@@ -12,14 +12,22 @@ echo "Listing available Docker images"
 # Shows a list of Docker images available with a go template
 docker image ls --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}\t{{.Size}}"
 
+
+Give an option to search and pull a known docker image
+read -p "Would you like to search for or pull a docker image? (y/n) " choice
+if ["choice" = "y"] ; then
+	read -p "Enter 's' to search and 'p' to pull " action
+	if ["action" = "s" ]; then
+	docker search $image_name
+	elif ["action" = "p" ]; then
+	docker pull $image_name
+	fi
+fi
+
+docker image ls --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}\t{{.Size}}"
+
 # Shows all of the Docker processes actively running using a Go template
 docker ps -a --format 'table {{.ID}}\t{{.Image}}\t{{.Names }}\t{{.Status}}'
-#
-# Give an option to search and pull a known docker image
-# read -p "Would you like to search for or pull a docker image? (y/n) " choice
-#
-# docker search $image_name
-# docker pull $image_name
 
 # List the available local docker profiles. Each profile may run a different version kubernetes for instance
 echo "Listing available profiles..."
