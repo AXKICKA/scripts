@@ -2,20 +2,20 @@
 
 # Author: Akil Johnson Sept 17, 2022
 
-echo "Starting docker cli (via colima) and minikube..."
+echo "\033[1;34mStarting docker (via colima) and minikube\033[0m"
 
 # Start colima to enable kubernetes add --kubernetes
 colima start
 
 
-echo "Listing available Docker images"
+echo "\033[1;34mListing available profiles\033[0m"
 # Shows a list of Docker images available with a go template
 docker image ls --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}\t{{.Size}}"
 
 
-Give an option to search and pull a known docker image
-read -p "Would you like to search for or pull a docker image? (y/n) " choice
-if ["choice" = "y"] ; then
+# Give an option to search and pull a known docker image
+read -r -p $'\033[1;33mWould you like to search for or pull another Docker image? \033[1;35m[y/n]\033[0m ' response
+if ["reponse" = "y"] ; then
 	read -p "Enter 's' to search and 'p' to pull " action
 	if ["action" = "s" ]; then
 	docker search $image_name
@@ -30,15 +30,17 @@ docker image ls --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}\t{{.Size}}"
 docker ps -a --format 'table {{.ID}}\t{{.Image}}\t{{.Names }}\t{{.Status}}'
 
 # List the available local docker profiles. Each profile may run a different version kubernetes for instance
-echo "Listing available profiles..."
+echo "\033[1;34mListing available profiles\033[0m"
 minikube profile list
 
-# Prompt the user to select a profile
-read -p "Enter the profile name to use: " profile_name
-
-# Start minikube using the selected profile
-minikube start -p $profile_name
-
+# Prompt the user to select a profile or press ENTER for the default profile
+read -p $'\033[1;33mType the profile name to use (Press RETURN for default): \033[0m' profile_name
+if [ "$profile_name" = "" ]; then
+	minikube start
+else
+# Start minikube using one of the listed profile options
+	minikube start -p $profile_name
+fi
 # Verify minikube is running
 minikube status
 
