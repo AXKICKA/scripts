@@ -14,6 +14,12 @@ docker image ls --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}\t{{.Size}}"
 
 # Shows all of the Docker processes actively running using a Go template
 docker ps -a --format 'table {{.ID}}\t{{.Image}}\t{{.Names }}\t{{.Status}}'
+#
+# Give an option to search and pull a known docker image
+# read -p "Would you like to search for or pull a docker image? (y/n) " choice
+#
+# docker search $image_name
+# docker pull $image_name
 
 # List the available local docker profiles. Each profile may run a different version kubernetes for instance
 echo "Listing available profiles..."
